@@ -1,1 +1,1 @@
-# tourism-be
+# tour-scheduler-be
