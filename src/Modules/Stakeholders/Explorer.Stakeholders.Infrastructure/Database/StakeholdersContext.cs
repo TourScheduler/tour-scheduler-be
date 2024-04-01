@@ -7,12 +7,16 @@ public class StakeholdersContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<Tourist> Tourists { get; set; }
 
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("stakeholders");
+
+        modelBuilder.Entity<Tourist>()
+            .Property(item => item.Interests).HasColumnType("jsonb");
 
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
@@ -25,5 +29,10 @@ public class StakeholdersContext : DbContext
             .HasOne<User>()
             .WithOne()
             .HasForeignKey<Person>(s => s.UserId);
+
+        modelBuilder.Entity<Tourist>()
+            .HasOne<User>()
+            .WithOne()
+            .HasForeignKey<Tourist>(t => t.UserId);
     }
 }
