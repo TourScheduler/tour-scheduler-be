@@ -28,7 +28,8 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
             Email = "turistaA@gmail.com",
             Password = "turistaA",
             Name = "Žika",
-            Surname = "Žikić"
+            Surname = "Žikić",
+            Interests = new List<TouristInterestDto>() { new TouristInterestDto() { Interest = (API.Dtos.InterestType)1 } }
         };
 
         // Act
