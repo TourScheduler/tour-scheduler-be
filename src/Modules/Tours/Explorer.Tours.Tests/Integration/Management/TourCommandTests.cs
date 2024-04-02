@@ -29,6 +29,7 @@ namespace Explorer.Tours.Tests.Integration.Management
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var newEntity = new CreateTourDto
             {
+                AuthorId = 150,
                 Name = "Tura 1",
                 Description = "Višednevna tura.",
                 Difficult = 0,

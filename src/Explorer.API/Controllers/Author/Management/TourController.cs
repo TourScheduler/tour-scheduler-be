@@ -1,5 +1,6 @@
 ﻿using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Management;
+using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,8 @@ namespace Explorer.API.Controllers.Author.Tours
         [HttpPost]
         public ActionResult<TourDto> Create([FromBody] CreateTourDto createTour)
         {
-            throw new NotImplementedException();
+            var result = _tourService.Create(createTour);
+            return CreateResponse(result);
         }
     }
 }

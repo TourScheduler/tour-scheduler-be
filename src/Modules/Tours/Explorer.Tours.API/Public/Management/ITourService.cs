@@ -11,8 +11,6 @@ namespace Explorer.Tours.API.Public.Management
 {
     public interface ITourService
     {
-        Result<PagedResult<TourDto>> GetPaged(int page, int pageSize);
         Result<TourDto> Create(CreateTourDto createTour);
-        Result Delete(int id);
     }
 }
