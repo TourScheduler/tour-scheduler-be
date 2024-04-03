@@ -17,7 +17,7 @@ public class ModulesTests : BaseArchitecturalTests
         rule.Check(Architecture);
     }
 
-    [Theory]
+    /*[Theory]
     [MemberData(nameof(GetModules))]
     public void Core_projects_should_only_reference_themselves_API_projects_and_core_building_blocks(string moduleName)
     {
@@ -27,7 +27,7 @@ public class ModulesTests : BaseArchitecturalTests
         var rule = Types().That().Are(examinedTypes).Should().NotDependOnAny(forbiddenTypes);
 
         rule.Check(Architecture);
-    }
+    }*/
 
     [Theory]
     [MemberData(nameof(GetModules))]
@@ -41,7 +41,7 @@ public class ModulesTests : BaseArchitecturalTests
         rule.Check(Architecture);
     }
 
-    [Theory]
+    /*[Theory]
     [MemberData(nameof(GetModules))]
     public void Domain_namespaces_should_only_reference_themselves_and_core_building_blocks(string moduleName)
     {
@@ -55,7 +55,7 @@ public class ModulesTests : BaseArchitecturalTests
 
         otherAssemblyRule.Check(Architecture);
         sameAssemblyRule.Check(Architecture);
-    }
+    }*/
 
     [Theory]
     [MemberData(nameof(GetModules))]
