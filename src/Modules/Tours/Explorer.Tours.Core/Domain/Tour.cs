@@ -18,8 +18,9 @@ namespace Explorer.Tours.Core.Domain
         public CategoryType Category { get; init; }
         public double Price { get; init; }
         public StatusType Status { get; init; }
+        public List<KeyPoint> KeyPoints { get; init; }
 
-        public Tour(long authorId, string name, string description, DifficultType difficult, CategoryType category, double price, StatusType status)
+        public Tour(long authorId, string name, string description, DifficultType difficult, CategoryType category, double price, StatusType status, List<KeyPoint> keyPoints)
         {
             AuthorId = authorId;
             Name = name;
@@ -28,6 +29,7 @@ namespace Explorer.Tours.Core.Domain
             Category = category;
             Price = price;
             Status = status;
+            KeyPoints = keyPoints;
             Validate();
         }
         private void Validate()

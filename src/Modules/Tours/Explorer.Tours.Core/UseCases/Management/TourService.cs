@@ -29,7 +29,7 @@ namespace Explorer.Tours.Core.UseCases.Management
         {
             try
             {
-                var tour = _tourRepository.Create(new Tour(createTour.AuthorId, createTour.Name, createTour.Description, createTour.Difficult, createTour.Category, createTour.Price, createTour.Status));
+                var tour = _tourRepository.Create(new Tour(createTour.AuthorId, createTour.Name, createTour.Description, createTour.Difficult, createTour.Category, createTour.Price, createTour.Status, convertKeyPoints(createTour.KeyPoints)));
 
                 return _mapper.Map<TourDto>(tour);
             }
@@ -38,6 +38,17 @@ namespace Explorer.Tours.Core.UseCases.Management
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
                 // There is a subtle issue here. Can you find it?
             }
+        }
+
+        public List<KeyPoint> convertKeyPoints(List<CreateKeyPointDto> keyPoints)
+        {
+            return keyPoints.Select(keyPoint => new KeyPoint(
+                    keyPoint.Longitude,
+                    keyPoint.Latitude,
+                    keyPoint.Name,
+                    keyPoint.Description,
+                    new Image(keyPoint.Image.Filename, Convert.FromBase64String(keyPoint.Image.Data))
+                )).ToList();
         }
     }
 }
