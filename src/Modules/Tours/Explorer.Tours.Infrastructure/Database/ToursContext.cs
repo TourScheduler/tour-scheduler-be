@@ -21,5 +21,8 @@ public class ToursContext : DbContext
         .HasForeignKey(tour => tour.AuthorId);
 
         modelBuilder.Ignore<Author>();
+
+        modelBuilder.Entity<Tour>()
+            .Property(item => item.KeyPoints).HasColumnType("jsonb");
     }
 }

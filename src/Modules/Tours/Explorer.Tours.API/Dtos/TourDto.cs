@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Dtos
         public CategoryType Category { get; set; }
         public decimal Price { get; set; }
         public StatusType Status { get; set; }
+        public List<KeyPointDto> KeyPoints { get; set; }
     }
 }

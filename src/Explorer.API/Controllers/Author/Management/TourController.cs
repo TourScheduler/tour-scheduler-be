@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Management;
 using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,13 @@ namespace Explorer.API.Controllers.Author.Tours
         public ActionResult<TourDto> Create([FromBody] CreateTourDto createTour)
         {
             var result = _tourService.Create(createTour);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("author/{authorId:int}")]
+        public ActionResult<TourDto> GetByAuthorId(int authorId)
+        {
+            var result = _tourService.GetByAuthorId(authorId);
             return CreateResponse(result);
         }
     }
