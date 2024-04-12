@@ -9,5 +9,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     public interface ITourRepository
     {
         Tour Create(Tour tour);
+        List<Tour> GetByAuthorId(int authorId);
     }
 }

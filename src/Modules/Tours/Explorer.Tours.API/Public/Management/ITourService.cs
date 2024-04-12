@@ -13,5 +13,6 @@ namespace Explorer.Tours.API.Public.Management
     public interface ITourService
     {
         Result<TourDto> Create(CreateTourDto createTour);
+        Result<List<TourDto>> GetByAuthorId(int authorId);
     }
 }
