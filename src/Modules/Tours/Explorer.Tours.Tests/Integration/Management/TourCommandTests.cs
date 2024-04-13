@@ -30,7 +30,7 @@ namespace Explorer.Tours.Tests.Integration.Management
             var newEntity = new CreateTourDto
             {
                 AuthorId = 150,
-                Name = "Tura 2",
+                Name = "Nova tura",
                 Description = "Višednevna tura.",
                 Difficult = 0,
                 Category = 0,
@@ -70,6 +70,54 @@ namespace Explorer.Tours.Tests.Integration.Management
             // Assert
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(400);
+        }
+
+        [Fact]
+        public void Publishes()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            int id = -1;
+
+            // Act
+            var result = ((ObjectResult)controller.Publish(id).Result)?.Value as TourDto;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.Id.ShouldBe(-1);
+            result.Status.ShouldBe(StatusType.Published);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 1" && i.Status == StatusType.Published);
+            storedEntity.ShouldNotBeNull();
+            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 1" && i.Status == StatusType.Draft);
+            oldEntity.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Publish_fails_less_key_points()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            int id = -2;
+
+            // Act
+            var result = ((ObjectResult)controller.Publish(id).Result)?.Value as TourDto;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.Id.ShouldBe(-2);
+            result.Status.ShouldNotBe(StatusType.Published);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && i.Status == StatusType.Published);
+            storedEntity.ShouldBeNull();
+            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && i.Status == StatusType.Draft);
+            oldEntity.ShouldNotBeNull();
         }
 
         private static TourController CreateController(IServiceScope scope)
