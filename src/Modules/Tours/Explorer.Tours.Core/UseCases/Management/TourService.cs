@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Management;
@@ -55,6 +56,29 @@ namespace Explorer.Tours.Core.UseCases.Management
                     keyPoint.Description,
                     new Image(keyPoint.Image.Filename, Convert.FromBase64String(keyPoint.Image.Data))
                 )).ToList();
+        }
+
+        public Result<TourDto> Publish(int id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                if (tour != null)
+                {
+                    tour.Publish();
+                    tour = _tourRepository.Update(tour);
+                }
+
+                return _mapper.Map<TourDto>(tour);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
         }
     }
 }

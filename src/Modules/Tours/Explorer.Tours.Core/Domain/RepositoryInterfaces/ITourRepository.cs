@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         Tour Create(Tour tour);
         List<Tour> GetByAuthorId(int authorId);
+        Tour GetById(int id);
+        Tour Update(Tour tour);
     }
 }

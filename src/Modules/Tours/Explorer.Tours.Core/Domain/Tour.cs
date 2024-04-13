@@ -17,7 +17,7 @@ namespace Explorer.Tours.Core.Domain
         public DifficultType Difficult { get; init; }
         public CategoryType Category { get; init; }
         public double Price { get; init; }
-        public StatusType Status { get; init; }
+        public StatusType Status { get; private set; }
         public List<KeyPoint> KeyPoints { get; init; }
 
         public Tour(long authorId, string name, string description, DifficultType difficult, CategoryType category, double price, StatusType status, List<KeyPoint> keyPoints)
@@ -38,6 +38,15 @@ namespace Explorer.Tours.Core.Domain
             if (string.IsNullOrWhiteSpace(Name)) throw new ArgumentException("Invalid Name");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
             if (Price <= 0) throw new ArgumentException("Invalid Price");
+        }
+
+        public void Publish()
+        {
+            Validate();
+            if (KeyPoints.Count >= 2)
+            {
+                Status = StatusType.Published;
+            }
         }
     }
 }

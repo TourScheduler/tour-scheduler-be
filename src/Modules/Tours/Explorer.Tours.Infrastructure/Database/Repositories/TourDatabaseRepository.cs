@@ -1,4 +1,5 @@
-﻿using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,25 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public List<Tour> GetByAuthorId(int authorId)
         {
             return _dbContext.Tours.Where(t => t.AuthorId == authorId).ToList();
+        }
+
+        public Tour GetById(int id)
+        {
+            return _dbContext.Tours.FirstOrDefault(t => t.Id == id);
+        }
+
+        public Tour Update(Tour tour)
+        {
+            try
+            {
+                _dbContext.Tours.Update(tour);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return tour;
         }
     }
 }
