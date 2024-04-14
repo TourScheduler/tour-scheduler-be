@@ -80,5 +80,22 @@ namespace Explorer.Tours.Core.UseCases.Management
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
+
+        public Result<TourDto> GetById(int id)
+        {
+            try
+            {
+                Tour tour = _tourRepository.GetById(id);
+                return _mapper.Map<TourDto>(tour);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
     }
 }

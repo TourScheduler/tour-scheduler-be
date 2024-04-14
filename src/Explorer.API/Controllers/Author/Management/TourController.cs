@@ -38,5 +38,12 @@ namespace Explorer.API.Controllers.Author.Tours
             var result = _tourService.Publish(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<TourDto> GetById(int id)
+        {
+            var result = _tourService.GetById(id);
+            return CreateResponse(result);
+        }
     }
 }
