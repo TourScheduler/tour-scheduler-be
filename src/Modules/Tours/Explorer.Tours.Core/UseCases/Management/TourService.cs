@@ -43,8 +43,8 @@ namespace Explorer.Tours.Core.UseCases.Management
 
         public Result<List<TourDto>> GetByAuthorId(int authorId)
         {
-            List<Tour> tours = _tourRepository.GetByAuthorId(authorId);
-            return _mapper.Map<List<TourDto>>(tours);
+            List<Tour> authorTours = _tourRepository.GetByAuthorId(authorId);
+            return _mapper.Map<List<TourDto>>(authorTours);
         }
 
         public List<KeyPoint> convertKeyPoints(List<CreateKeyPointDto> keyPoints)
@@ -69,6 +69,23 @@ namespace Explorer.Tours.Core.UseCases.Management
                     tour = _tourRepository.Update(tour);
                 }
 
+                return _mapper.Map<TourDto>(tour);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
+
+        public Result<TourDto> GetById(int id)
+        {
+            try
+            {
+                Tour tour = _tourRepository.GetById(id);
                 return _mapper.Map<TourDto>(tour);
             }
             catch (KeyNotFoundException e)
