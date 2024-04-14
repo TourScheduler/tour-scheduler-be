@@ -43,8 +43,8 @@ namespace Explorer.Tours.Core.UseCases.Management
 
         public Result<List<TourDto>> GetByAuthorId(int authorId)
         {
-            List<Tour> tours = _tourRepository.GetByAuthorId(authorId);
-            return _mapper.Map<List<TourDto>>(tours);
+            List<Tour> authorTours = _tourRepository.GetByAuthorId(authorId);
+            return _mapper.Map<List<TourDto>>(authorTours);
         }
 
         public List<KeyPoint> convertKeyPoints(List<CreateKeyPointDto> keyPoints)
