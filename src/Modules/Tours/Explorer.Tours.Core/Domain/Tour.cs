@@ -48,5 +48,11 @@ namespace Explorer.Tours.Core.Domain
                 Status = StatusType.Published;
             }
         }
+
+        public void Archive()
+        {
+            Validate();
+            Status = StatusType.Archived;
+        }
     }
 }

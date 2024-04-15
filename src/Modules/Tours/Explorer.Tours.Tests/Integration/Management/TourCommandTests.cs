@@ -120,6 +120,47 @@ namespace Explorer.Tours.Tests.Integration.Management
             oldEntity.ShouldNotBeNull();
         }
 
+        [Fact]
+        public void Archives()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            int id = -2;
+
+            // Act
+            var result = ((ObjectResult)controller.Archive(id).Result)?.Value as TourDto;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.Id.ShouldBe(-2);
+            result.Status.ShouldBe(StatusType.Archived);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && i.Status == StatusType.Archived);
+            storedEntity.ShouldNotBeNull();
+            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && (i.Status == StatusType.Draft || i.Status == StatusType.Published));
+            oldEntity.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Archive_fails_invalid_id()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            int id = -1000;
+
+            // Act
+            var result = (ObjectResult)controller.Archive(id).Result;
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(404);
+        }
+
         private static TourController CreateController(IServiceScope scope)
         {
             return new TourController(scope.ServiceProvider.GetRequiredService<ITourService>())

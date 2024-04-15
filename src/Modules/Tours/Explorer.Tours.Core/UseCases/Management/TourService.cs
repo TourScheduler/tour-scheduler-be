@@ -97,5 +97,30 @@ namespace Explorer.Tours.Core.UseCases.Management
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
+
+        public Result<TourDto> Archive(int id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                if (tour != null)
+                {
+                    tour.Archive();
+                    tour = _tourRepository.Update(tour);
+
+                    return _mapper.Map<TourDto>(tour);
+                }
+
+                return Result.Fail(FailureCode.NotFound).WithError($"Tour with ID {id} not found.");
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
     }
 }
