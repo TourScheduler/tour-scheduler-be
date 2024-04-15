@@ -45,5 +45,12 @@ namespace Explorer.API.Controllers.Author.Tours
             var result = _tourService.GetById(id);
             return CreateResponse(result);
         }
+
+        [HttpPut("{id:int}/archive")]
+        public ActionResult<TourDto> Archive(int id)
+        {
+            var result = _tourService.Archive(id);
+            return CreateResponse(result);
+        }
     }
 }

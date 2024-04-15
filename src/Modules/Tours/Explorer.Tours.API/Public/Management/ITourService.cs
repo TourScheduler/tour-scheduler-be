@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Public.Management
         Result<List<TourDto>> GetByAuthorId(int authorId);
         Result<TourDto> Publish(int id);
         Result<TourDto> GetById(int id);
+        Result<TourDto> Archive(int id);
     }
 }
