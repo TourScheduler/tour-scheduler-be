@@ -127,20 +127,20 @@ namespace Explorer.Tours.Tests.Integration.Management
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
-            int id = -2;
+            int id = -3;
 
             // Act
             var result = ((ObjectResult)controller.Archive(id).Result)?.Value as TourDto;
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-2);
+            result.Id.ShouldBe(-3);
             result.Status.ShouldBe(StatusType.Archived);
 
             // Assert - Database
-            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && i.Status == StatusType.Archived);
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 3" && i.Status == StatusType.Archived);
             storedEntity.ShouldNotBeNull();
-            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 2" && (i.Status == StatusType.Draft || i.Status == StatusType.Published));
+            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura 3" && (i.Status == StatusType.Draft || i.Status == StatusType.Published));
             oldEntity.ShouldBeNull();
         }
 

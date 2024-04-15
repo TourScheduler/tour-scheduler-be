@@ -30,7 +30,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(2);
+            result.Count.ShouldBe(3);
         }
 
         private static TourController CreateController(IServiceScope scope)

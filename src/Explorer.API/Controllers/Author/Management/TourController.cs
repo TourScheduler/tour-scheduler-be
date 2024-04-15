@@ -49,7 +49,8 @@ namespace Explorer.API.Controllers.Author.Tours
         [HttpPut("{id:int}/archive")]
         public ActionResult<TourDto> Archive(int id)
         {
-            throw new NotImplementedException();
+            var result = _tourService.Archive(id);
+            return CreateResponse(result);
         }
     }
 }
