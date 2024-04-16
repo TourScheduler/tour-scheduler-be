@@ -52,5 +52,12 @@ namespace Explorer.API.Controllers.Author.Tours
             var result = _tourService.Archive(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("author/{authorId:int}/filter")]
+        public ActionResult<TourDto> FilterByStatus(int authorId, [FromQuery] int status)
+        {
+            var result = _tourService.GetAuthorToursByStatus(authorId, status);
+            return CreateResponse(result);
+        }
     }
 }

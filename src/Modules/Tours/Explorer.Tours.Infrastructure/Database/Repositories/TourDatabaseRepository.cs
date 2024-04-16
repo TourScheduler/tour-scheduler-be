@@ -27,6 +27,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return tour;
         }
 
+        public List<Tour> GetAuthorToursByStatus(int authorId, int status)
+        {
+            return _dbContext.Tours.Where(t => t.AuthorId == authorId && ((int)t.Status) == status).ToList();
+        }
+
         public List<Tour> GetByAuthorId(int authorId)
         {
             return _dbContext.Tours.Where(t => t.AuthorId == authorId).ToList();
