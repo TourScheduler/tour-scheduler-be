@@ -56,7 +56,8 @@ namespace Explorer.API.Controllers.Author.Tours
         [HttpGet("author/{authorId:int}/filter")]
         public ActionResult<TourDto> FilterByStatus(int authorId, [FromQuery] int status)
         {
-            throw new NotImplementedException();
+            var result = _tourService.GetAuthorToursByStatus(authorId, status);
+            return CreateResponse(result);
         }
     }
 }

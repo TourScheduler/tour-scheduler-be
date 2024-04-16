@@ -122,5 +122,11 @@ namespace Explorer.Tours.Core.UseCases.Management
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
+
+        public Result<List<TourDto>> GetAuthorToursByStatus(int authorId, int status)
+        {
+            List<Tour> filteredTours = _tourRepository.GetAuthorToursByStatus(authorId, status);
+            return _mapper.Map<List<TourDto>>(filteredTours);
+        }
     }
 }
