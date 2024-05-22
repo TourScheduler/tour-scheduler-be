@@ -10,6 +10,6 @@ namespace Explorer.Tours.API.Public.Execution
 {
     public interface IPurchaseService
     {
-        Result<List<PurchaseDto>> Create(List<CreatePurchaseDto> purchasesDto);
+        Result<List<PurchaseDto>> Create(string recipientEmail, List<CreatePurchaseDto> purchasesDto);
     }
 }

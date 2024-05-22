@@ -19,9 +19,9 @@ namespace Explorer.API.Controllers.Tourist.Execution
         }
 
         [HttpPost]
-        public ActionResult<List<PurchaseDto>> Create([FromBody] List<CreatePurchaseDto>  createPurchasesDto)
+        public ActionResult<List<PurchaseDto>> Create([FromQuery] string recipientEmail, [FromBody] List<CreatePurchaseDto>  createPurchasesDto)
         {
-            var result = _purchaseService.Create(createPurchasesDto);
+            var result = _purchaseService.Create(recipientEmail, createPurchasesDto);
             return CreateResponse(result);
         }
     }
