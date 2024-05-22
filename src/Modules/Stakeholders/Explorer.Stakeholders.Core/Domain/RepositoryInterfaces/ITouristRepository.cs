@@ -9,5 +9,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
     public interface ITouristRepository
     {
         Tourist Create(Tourist tourist);
+        Tourist GetById(int id);
     }
 }

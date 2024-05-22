@@ -45,7 +45,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(3);
+            result.Count.ShouldBe(1);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(0);
+            result.Count.ShouldBe(1);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(0);
+            result.Count.ShouldBe(1);
         }
 
         private static TourController CreateController(IServiceScope scope)

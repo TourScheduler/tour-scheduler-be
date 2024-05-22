@@ -1,6 +1,7 @@
 ﻿using Explorer.API.Controllers.Author.Tours;
 using Explorer.API.Controllers.Tourist.Execution;
 using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.API.Public.Management;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -26,24 +27,25 @@ namespace Explorer.Tours.Tests.Integration.Execution
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var newList = new List<CreatePurchaseDto>();
             var newEntity = new CreatePurchaseDto
             {
                 TourId = -1,
                 TouristId = -21
             };
+            newList.Add(newEntity);
 
             // Act
-            var result = ((ObjectResult)controller.Create(newEntity).Result)?.Value as CreatePurchaseDto;
+            var result = ((ObjectResult)controller.Create(newList).Result)?.Value as List<PurchaseDto>;
 
             // Assert - Response
             result.ShouldNotBeNull();
-            /*result.Id.ShouldNotBe(0);
-            result.Name.ShouldBe(newEntity.Name);*/
+            result.Count.ShouldNotBe(0);
 
-            /*// Assert - Database
-            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == newEntity.Name);
+            // Assert - Database
+            var storedEntity = dbContext.Purchases.FirstOrDefault(p => p.Id == result[0].Id);
             storedEntity.ShouldNotBeNull();
-            storedEntity.Id.ShouldBe(result.Id);*/
+            storedEntity.Id.ShouldBe(result[0].Id);
         }
 
         [Fact]
@@ -52,13 +54,15 @@ namespace Explorer.Tours.Tests.Integration.Execution
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
+            var newList = new List<CreatePurchaseDto>();
             var newEntity = new CreatePurchaseDto
             {
                 TourId = -100
             };
+            newList.Add(newEntity);
 
             // Act
-            var result = (ObjectResult)controller.Create(newEntity).Result;
+            var result = (ObjectResult)controller.Create(newList).Result;
 
             // Assert
             result.ShouldNotBeNull();
@@ -67,7 +71,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
 
         private static PurchaseController CreateController(IServiceScope scope)
         {
-            return new PurchaseController()
+            return new PurchaseController(scope.ServiceProvider.GetRequiredService<IPurchaseService>())
             {
                 ControllerContext = BuildContext("-1")
             };
