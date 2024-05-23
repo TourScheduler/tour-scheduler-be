@@ -42,6 +42,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.Tours.FirstOrDefault(t => t.Id == id);
         }
 
+        public List<Tour> GetPublishedTours()
+        {
+            return _dbContext.Tours.Where(t => ((int)t.Status) == 1).ToList();
+        }
+
         public Tour Update(Tour tour)
         {
             try

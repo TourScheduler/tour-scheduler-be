@@ -1,5 +1,6 @@
 ﻿using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,11 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext.Tourists.Add(tourist);
             _dbContext.SaveChanges();
             return tourist;
+        }
+
+        public Tourist GetById(int id)
+        {
+            return _dbContext.Tourists.FirstOrDefault(t => t.UserId == id);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Explorer.Tours.Tests.Integration.Management
             result.Name.ShouldBe(newEntity.Name);
 
             // Assert - Database
-            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == newEntity.Name);
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Id == result.Id);
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
         }

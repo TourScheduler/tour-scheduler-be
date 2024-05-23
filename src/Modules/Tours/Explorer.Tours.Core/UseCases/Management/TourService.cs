@@ -128,5 +128,11 @@ namespace Explorer.Tours.Core.UseCases.Management
             List<Tour> filteredTours = _tourRepository.GetAuthorToursByStatus(authorId, status);
             return _mapper.Map<List<TourDto>>(filteredTours);
         }
+
+        public Result<List<TourDto>> GetPublishedTours()
+        {
+            List<Tour> publishedTours = _tourRepository.GetPublishedTours();
+            return _mapper.Map<List<TourDto>>(publishedTours);
+        }
     }
 }

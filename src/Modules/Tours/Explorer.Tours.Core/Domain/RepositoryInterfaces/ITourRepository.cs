@@ -14,5 +14,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         Tour GetById(int id);
         Tour Update(Tour tour);
         List<Tour> GetAuthorToursByStatus(int authorId, int status);
+        List<Tour> GetPublishedTours();
     }
 }
