@@ -12,10 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.API.Public;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class TouristService : IInternalTouristService
+    public class TouristService : IInternalTouristService, ITouristService
     {
         private readonly IUserRepository _userRepository;
         private readonly ICrudRepository<Person> _personRepository;
