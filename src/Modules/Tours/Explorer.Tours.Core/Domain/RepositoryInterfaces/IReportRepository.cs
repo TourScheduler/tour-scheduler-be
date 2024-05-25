@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
-    public interface IPurchaseRepository
+    public interface IReportRepository
     {
-        Purchase Create(Purchase purchase);
-        List<Purchase> GetAll();
-        List<Purchase> FindPurchasesByMonthAndYear(int month, int year);
+        Report Create(Report report);
+        Report FindReportByAuthorAndDate(int month, int year, long authorId);
     }
 }

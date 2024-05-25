@@ -9,6 +9,7 @@ public class ToursContext : DbContext
     public DbSet<Equipment> Equipment { get; set; }
     public DbSet<Tour> Tours { get; set; }
     public DbSet<Purchase> Purchases { get; set; }
+    public DbSet<Report> Reports { get; set; }
 
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
@@ -25,5 +26,11 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<Tour>()
             .Property(item => item.KeyPoints).HasColumnType("jsonb");
+
+        modelBuilder.Entity<Report>()
+            .Property(item => item.BestSellingTours).HasColumnType("jsonb");
+
+        modelBuilder.Entity<Report>()
+            .Property(item => item.UnsoldedTours).HasColumnType("jsonb");
     }
 }

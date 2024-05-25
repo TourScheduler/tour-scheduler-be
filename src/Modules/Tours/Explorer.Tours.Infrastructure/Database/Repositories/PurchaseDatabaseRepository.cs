@@ -23,5 +23,15 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return purchase;
         }
+
+        public List<Purchase> FindPurchasesByMonthAndYear(int month, int year)
+        {
+            return _dbContext.Purchases.Where(p => p.PurchaseDate.Month == month && p.PurchaseDate.Year == year).ToList();
+        }
+
+        public List<Purchase> GetAll()
+        {
+            return _dbContext.Purchases.ToList();
+        }
     }
 }

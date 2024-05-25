@@ -18,6 +18,7 @@ namespace Explorer.Tours.Core.Domain
             TouristId = touristId;
             TourId = tourId;
             PurchaseDate = purchaseDate;
+            Validate();
         }
 
         private void Validate()
