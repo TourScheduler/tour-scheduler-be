@@ -22,7 +22,7 @@ namespace Explorer.Tours.Core.UseCases.Execution
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (DateTime.UtcNow.Day == 25) // izmeniti kasnije
+                if (DateTime.UtcNow.Day == 26) // izmeniti kasnije
                 {
                     _reportService.Create();
                 }

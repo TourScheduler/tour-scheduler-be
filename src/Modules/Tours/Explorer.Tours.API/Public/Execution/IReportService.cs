@@ -13,5 +13,6 @@ namespace Explorer.Tours.API.Public.Execution
         void Create();
         List<long> FindPurchasesAuthors();
         decimal FindPercentageChange(long a, double totalCount);
+        Result<List<ReportDto>> GetByAuthorId(int authorId);
     }
 }

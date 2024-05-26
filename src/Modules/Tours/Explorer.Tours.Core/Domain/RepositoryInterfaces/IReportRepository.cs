@@ -10,5 +10,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         Report Create(Report report);
         Report FindReportByAuthorAndDate(int month, int year, long authorId);
+        List<Report> GetByAuthorId(int authorId);
     }
 }

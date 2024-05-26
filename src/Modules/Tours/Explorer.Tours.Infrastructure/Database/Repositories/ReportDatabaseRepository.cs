@@ -29,5 +29,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _dbContext.Reports.FirstOrDefault(r => r.AuthorId == authorId && r.CreatedFor.Month == month && r.CreatedFor.Year == year);
         }
+
+        public List<Report> GetByAuthorId(int authorId)
+        {
+            return _dbContext.Reports.Where(r => r.AuthorId == authorId).ToList();
+        }
     }
 }

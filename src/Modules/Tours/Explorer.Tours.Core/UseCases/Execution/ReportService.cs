@@ -1,6 +1,9 @@
-﻿using Explorer.Tours.API.Public.Execution;
+﻿using AutoMapper;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using FluentResults;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,13 +20,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly ITourRepository _tourRepository;
         private readonly IReportRepository _reportRepository;
+        private readonly IMapper _mapper;
 
-        public ReportService(IServiceScopeFactory serviceScopeFactory)
+        public ReportService(IServiceScopeFactory serviceScopeFactory, IMapper mapper)
         {
             _scope = serviceScopeFactory.CreateScope();
             _purchaseRepository = _scope.ServiceProvider.GetRequiredService<IPurchaseRepository>();
             _tourRepository = _scope.ServiceProvider.GetRequiredService<ITourRepository>();
             _reportRepository = _scope.ServiceProvider.GetRequiredService<IReportRepository>();
+            _mapper = mapper;
         }
 
         public void Create()
@@ -137,6 +142,25 @@ namespace Explorer.Tours.Core.UseCases.Execution
             }
 
             return authorIds;
+        }
+
+        public Result<List<ReportDto>> GetByAuthorId(int authorId)
+        {
+            List<ReportDto> reports = _reportRepository.GetByAuthorId(authorId)
+                .Select(ar => new ReportDto(
+                    ar.Id,
+                    ar.AuthorId,
+                    ar.CreatedAt,
+                    ar.CreatedFor,
+                    ar.Count,
+                    ar.Sum,
+                    ar.Percentage,
+                    ar.BestSellingTours.Select(t => _mapper.Map<TourDto>(_tourRepository.GetById(t))).ToList(),
+                    ar.UnsoldedTours.Select(t => _mapper.Map<TourDto>(_tourRepository.GetById(t))).ToList()
+                ))
+                .ToList();
+
+            return reports;
         }
     }
 }
