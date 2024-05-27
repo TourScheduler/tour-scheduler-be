@@ -36,7 +36,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
             newList.Add(newEntity);
 
             // Act
-            var result = ((ObjectResult)controller.Create(newList).Result)?.Value as List<PurchaseDto>;
+            var result = ((ObjectResult)controller.Create("cedomirstevanovic8@gmail.com", newList).Result)?.Value as List<PurchaseDto>;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -62,7 +62,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
             newList.Add(newEntity);
 
             // Act
-            var result = (ObjectResult)controller.Create(newList).Result;
+            var result = (ObjectResult)controller.Create("cedomirstevanovic8@gmail.com", newList).Result;
 
             // Assert
             result.ShouldNotBeNull();
@@ -71,7 +71,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
 
         private static PurchaseController CreateController(IServiceScope scope)
         {
-            return new PurchaseController(scope.ServiceProvider.GetRequiredService<IPurchaseService>())
+            return new PurchaseController(scope.ServiceProvider.GetRequiredService<IPurchaseService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
             {
                 ControllerContext = BuildContext("-1")
             };
