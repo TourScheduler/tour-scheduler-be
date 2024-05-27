@@ -23,5 +23,12 @@ namespace Explorer.API.Controllers.Author.Management
             var result = _reportService.GetByAuthorId(authorId);
             return CreateResponse(result);
         }
+
+        [HttpGet("unsolded-tours/author/{authorId:int}")]
+        public ActionResult<TourDto> GetUnsoldedToursByAuthorId(int authorId)
+        {
+            var result = _reportService.GetUnsoldedToursByAuthorId(authorId);
+            return CreateResponse(result);
+        }
     }
 }

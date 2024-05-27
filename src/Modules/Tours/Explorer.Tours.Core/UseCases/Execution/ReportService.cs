@@ -117,7 +117,7 @@ namespace Explorer.Tours.Core.UseCases.Execution
         public List<Purchase> FindPurchasesByMonthAndYear(long a)
         {
             List<Purchase> authorPurchases = new List<Purchase>();
-            foreach (var p in _purchaseRepository.FindPurchasesByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year)) // izmeniti kasnije
+            foreach (var p in _purchaseRepository.FindPurchasesByMonthAndYear(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year))
             {
                 Tour tour = _tourRepository.GetById((int)p.TourId);
                 if (tour.AuthorId == a)
@@ -161,6 +161,22 @@ namespace Explorer.Tours.Core.UseCases.Execution
                 .ToList();
 
             return reports;
+        }
+
+        public Result<List<TourDto>> GetUnsoldedToursByAuthorId(int authorId)
+        {
+            var authorTours = _tourRepository.GetByAuthorId(authorId);
+            var reports = _reportRepository.GetByAuthorId(authorId).OrderByDescending(r => r.CreatedFor).ToList();
+
+            var unsoldedTours = authorTours.Where(at =>
+                Enumerable.Range(0, Math.Max(reports.Count - 3, 0))
+                    .Any(i => i + 3 < reports.Count &&
+                              reports[i].UnsoldedTours.Contains((int)at.Id) &&
+                              reports[i + 1].UnsoldedTours.Contains((int)at.Id) &&
+                              reports[i + 2].UnsoldedTours.Contains((int)at.Id))
+            ).Select(at => _mapper.Map<TourDto>(at)).ToList();
+
+            return unsoldedTours;
         }
     }
 }

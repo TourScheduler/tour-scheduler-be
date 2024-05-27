@@ -14,5 +14,6 @@ namespace Explorer.Tours.API.Public.Execution
         List<long> FindPurchasesAuthors();
         decimal FindPercentageChange(long a, double totalCount);
         Result<List<ReportDto>> GetByAuthorId(int authorId);
+        Result<List<TourDto>> GetUnsoldedToursByAuthorId(int authorId);
     }
 }
