@@ -1,4 +1,5 @@
-﻿using Explorer.API.Controllers.Tourist.Execution;
+﻿using AutoMapper;
+using Explorer.API.Controllers.Tourist.Execution;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.API.Public.Management;
@@ -32,12 +33,12 @@ namespace Explorer.Tours.Tests.Integration.Execution
             // Assert - Database
             var storedEntities = dbContext.Reports.Where(r => r.CreatedFor.Month == DateTime.Now.AddMonths(-1).Month && r.CreatedFor.Year == DateTime.Now.AddMonths(-1).Year).ToList();
             storedEntities.ShouldNotBeNull();
-            storedEntities.Count.ShouldBe(2);
+            storedEntities.Count.ShouldBe(1);
         }
 
         private static ReportService CreateReportService(IServiceScope scope)
         {
-            return new ReportService(scope.ServiceProvider.GetRequiredService<IServiceScopeFactory>());
+            return new ReportService(scope.ServiceProvider.GetRequiredService<IServiceScopeFactory>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
     }
 }

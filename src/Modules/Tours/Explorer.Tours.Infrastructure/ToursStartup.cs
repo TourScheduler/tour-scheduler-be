@@ -1,6 +1,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.API.Internal;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.API.Public.Management;
@@ -35,6 +36,7 @@ public static class ToursStartup
         services.AddScoped<IPurchaseService, PurchaseService>();
         services.AddSingleton<IReportService, ReportService>();
         services.AddHostedService<ReportSchedulerService>();
+        services.AddScoped<IInternalReportService, ReportService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)

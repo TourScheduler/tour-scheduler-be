@@ -9,6 +9,8 @@ using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.Infrastructure.Authentication;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Stakeholders.Infrastructure.Database.Repositories;
+using Explorer.Tours.API.Public.Execution;
+using Explorer.Tours.Core.UseCases.Execution;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +32,9 @@ public static class StakeholdersStartup
         services.AddScoped<ITokenGenerator, JwtGenerator>();
         services.AddScoped<IInternalTouristService, TouristService>();
         services.AddScoped<ITouristService, TouristService>();
+        services.AddSingleton<IAuthorService, AuthorService>();
+        services.AddHostedService<AuthorSchedulerService>();
+        services.AddSingleton<IInternalAuthorService, AuthorService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -37,6 +42,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped<ITouristRepository, TouristDatabaseRepository>();
+        services.AddScoped<IAuthorRepository, AuthorDatabaseRepository>();
 
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),

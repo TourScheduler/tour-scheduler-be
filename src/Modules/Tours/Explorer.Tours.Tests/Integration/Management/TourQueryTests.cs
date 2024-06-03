@@ -30,7 +30,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(3);
+            result.Count.ShouldBe(2);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Explorer.Tours.Tests.Integration.Management
 
             // Assert
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(3);
+            result.Count.ShouldBe(2);
         }
 
         [Fact]

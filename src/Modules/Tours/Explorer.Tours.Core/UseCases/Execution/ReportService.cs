@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Internal;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.UseCases.Execution
 {
-    public class ReportService : IReportService
+    public class ReportService : IReportService, IInternalReportService
     {
         private readonly IServiceScope _scope;
         private readonly IPurchaseRepository _purchaseRepository;
@@ -177,6 +178,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
             ).Select(at => _mapper.Map<TourDto>(at)).ToList();
 
             return unsoldedTours;
+        }
+
+        public long FindAuthorByMostSoldedTours()
+        {
+            return _reportRepository
+                .GetByDate(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year)
+                .OrderByDescending(report => report.Count)
+                .Select(report => report.AuthorId)
+                .FirstOrDefault();
         }
     }
 }

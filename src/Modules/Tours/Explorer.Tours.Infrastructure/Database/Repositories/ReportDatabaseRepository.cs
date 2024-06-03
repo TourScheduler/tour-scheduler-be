@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.Core.Domain;
+﻿using Explorer.Stakeholders.Core.Domain;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,6 +34,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public List<Report> GetByAuthorId(int authorId)
         {
             return _dbContext.Reports.Where(r => r.AuthorId == authorId).ToList();
+        }
+
+        public List<Report> GetByDate(int month, int year)
+        {
+            return _dbContext.Reports.Where(r => r.CreatedFor.Month == month && r.CreatedFor.Year == year).ToList();
         }
     }
 }
