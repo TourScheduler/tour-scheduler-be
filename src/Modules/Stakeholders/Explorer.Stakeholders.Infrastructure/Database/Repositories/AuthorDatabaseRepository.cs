@@ -19,6 +19,11 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext = dbContext;
         }
 
+        public List<Author> GetAll()
+        {
+            return _dbContext.Authors.ToList();
+        }
+
         public Author GetByUserId(long userId)
         {
             return _dbContext.Authors.FirstOrDefault(a => a.UserId == userId);

@@ -19,5 +19,6 @@ namespace Explorer.Tours.API.Public.Management
         Result<TourDto> Archive(int id);
         Result<List<TourDto>> GetAuthorToursByStatus(int authorId, int status);
         Result<List<TourDto>> GetPublishedTours();
+        Result<List<TourDto>> GetByAwardStatus(bool status, List<AuthorDto> authors);
     }
 }

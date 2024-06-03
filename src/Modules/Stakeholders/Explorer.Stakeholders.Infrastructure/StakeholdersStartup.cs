@@ -34,6 +34,7 @@ public static class StakeholdersStartup
         services.AddScoped<ITouristService, TouristService>();
         services.AddSingleton<IAuthorService, AuthorService>();
         services.AddHostedService<AuthorSchedulerService>();
+        services.AddSingleton<IInternalAuthorService, AuthorService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)

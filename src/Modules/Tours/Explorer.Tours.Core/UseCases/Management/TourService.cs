@@ -8,6 +8,7 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -133,6 +134,17 @@ namespace Explorer.Tours.Core.UseCases.Management
         {
             List<Tour> publishedTours = _tourRepository.GetPublishedTours();
             return _mapper.Map<List<TourDto>>(publishedTours);
+        }
+
+        public Result<List<TourDto>> GetByAwardStatus(bool status, List<AuthorDto> authors)
+        {
+            List<TourDto> tours = _tourRepository
+                .GetPublishedTours()
+                .Where(tour => authors.Any(author => author.UserId == tour.AuthorId && author.IsAwarded == status))
+                .Select(tour => _mapper.Map<TourDto>(tour))
+                .ToList();
+
+            return tours;
         }
     }
 }

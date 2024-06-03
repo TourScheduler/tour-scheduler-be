@@ -10,5 +10,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
     {
         Author GetByUserId(long userId);
         Author Update(Author author);
+        List<Author> GetAll();
     }
 }

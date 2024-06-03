@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.API.Public
+namespace Explorer.Stakeholders.API.Internal
 {
-    public interface IAuthorService
+    public interface IInternalAuthorService
     {
-        void Award();
         Result<AuthorDto> GetByUserId(long userId);
-        Result<List<AuthorDto>> GetAll();
     }
 }
