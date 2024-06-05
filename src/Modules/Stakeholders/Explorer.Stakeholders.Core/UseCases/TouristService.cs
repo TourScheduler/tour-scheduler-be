@@ -29,14 +29,14 @@ namespace Explorer.Stakeholders.Core.UseCases
             _touristRepository = touristRepository;
         }
 
-        public Result<TouristDto> GetById(int id)
+        public Result<API.Dtos.TouristDto> GetById(int id)
         {
             try
             {
                 User user = _userRepository.GetById(id);
                 Person person = _personRepository.Get(user.Id);
                 Tourist tourist = _touristRepository.GetById((int)user.Id);
-                return new TouristDto(user.Id, user.Username, user.Password, API.Dtos.UserRole.Tourist, user.IsActive, person.Name, person.Surname, person.Email);
+                return new API.Dtos.TouristDto(user.Id, user.Username, user.Password, API.Dtos.UserRole.Tourist, user.IsActive, person.Name, person.Surname, person.Email, tourist.Interests.Select(i => new API.Dtos.InterestDto((API.Dtos.InterestType)i.Type)).ToList());
             }
             catch (KeyNotFoundException e)
             {

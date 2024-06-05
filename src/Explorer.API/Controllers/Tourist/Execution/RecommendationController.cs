@@ -15,20 +15,29 @@ namespace Explorer.API.Controllers.Tourist.Execution
     {
         private readonly ITourService _tourService;
         private readonly IAuthorService _authorService;
+        private readonly ITouristService _touristService;
 
-        public RecommendationController(ITourService tourService, IAuthorService authorService)
+        public RecommendationController(ITourService tourService, IAuthorService authorService, ITouristService touristService)
         {
             _tourService = tourService;
             _authorService = authorService;
+            _touristService = touristService;
         }
 
         [HttpGet("filter-by-award")]
         public ActionResult<TourDto> FilterByAwardStatus([FromQuery] bool status)
         {
-            Debug.WriteLine(status);
             var result = _tourService.GetByAwardStatus(status, _authorService.GetAll().Value
                 .Select(a => new AuthorDto(a.Id, a.UserId, a.Points, a.IsAwarded))
                 .ToList());
+            return CreateResponse(result);
+        }
+
+        [HttpGet("tourist/{touristId:int}")]
+        public ActionResult<TourDto> GetByTouristInterests(int touristId)
+        {
+            var tourist = _touristService.GetById(touristId).Value;
+            var result = _tourService.GetByTouristInterests(new TouristDto(tourist.Id, tourist.Username, tourist.Password, Tours.API.Dtos.UserRole.Tourist, tourist.IsActive, tourist.Name, tourist.Surname, tourist.Email, tourist.Interests.Select(i => new InterestDto((Tours.API.Dtos.InterestType)i.Type)).ToList()));
             return CreateResponse(result);
         }
     }

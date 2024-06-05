@@ -19,7 +19,7 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<TouristDto> GetById(int id)
+        public ActionResult<Stakeholders.API.Dtos.TouristDto> GetById(int id)
         {
             var result = _touristService.GetById(id);
             return CreateResponse(result);
