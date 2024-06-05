@@ -33,11 +33,19 @@ namespace Explorer.API.Controllers.Tourist.Execution
             return CreateResponse(result);
         }
 
-        [HttpGet("tourist/{touristId:int}")]
+        [HttpGet("tours/tourist/{touristId:int}")]
         public ActionResult<TourDto> GetByTouristInterests(int touristId)
         {
             var tourist = _touristService.GetById(touristId).Value;
             var result = _tourService.GetByTouristInterests(new TouristDto(tourist.Id, tourist.Username, tourist.Password, Tours.API.Dtos.UserRole.Tourist, tourist.IsActive, tourist.Name, tourist.Surname, tourist.Email, tourist.Interests.Select(i => new InterestDto((Tours.API.Dtos.InterestType)i.Type)).ToList()));
+            return CreateResponse(result);
+        }
+
+        [HttpGet("tours/tourist/{touristId:int}/difficult")]
+        public ActionResult<TourDto> GetByTouristInterestsAndDifficult([FromQuery] int difficult, int touristId)
+        {
+            var tourist = _touristService.GetById(touristId).Value;
+            var result = _tourService.GetByTouristInterestsAndDifficult(difficult, new TouristDto(tourist.Id, tourist.Username, tourist.Password, Tours.API.Dtos.UserRole.Tourist, tourist.IsActive, tourist.Name, tourist.Surname, tourist.Email, tourist.Interests.Select(i => new InterestDto((Tours.API.Dtos.InterestType)i.Type)).ToList()));
             return CreateResponse(result);
         }
     }
