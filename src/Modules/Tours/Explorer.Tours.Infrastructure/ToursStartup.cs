@@ -37,6 +37,7 @@ public static class ToursStartup
         services.AddSingleton<IReportService, ReportService>();
         services.AddHostedService<ReportSchedulerService>();
         services.AddScoped<IInternalReportService, ReportService>();
+        services.AddScoped<ITourProblemService, TourProblemService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -45,6 +46,7 @@ public static class ToursStartup
         services.AddScoped<ITourRepository, TourDatabaseRepository>();
         services.AddScoped<IPurchaseRepository, PurchaseDatabaseRepository>();
         services.AddScoped<IReportRepository, ReportDatabaseRepository>();
+        services.AddScoped<ITourProblemRepository, TourProblemDatabaseRepository>();
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
