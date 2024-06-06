@@ -50,7 +50,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
 
         private static RecommendationController CreateController(IServiceScope scope)
         {
-            return new RecommendationController(scope.ServiceProvider.GetRequiredService<ITourService>(), scope.ServiceProvider.GetRequiredService<Stakeholders.API.Public.IAuthorService>())
+            return new RecommendationController(scope.ServiceProvider.GetRequiredService<ITourService>(), scope.ServiceProvider.GetRequiredService<Stakeholders.API.Public.IAuthorService>(), scope.ServiceProvider.GetRequiredService<Stakeholders.API.Public.ITouristService>())
             {
                 ControllerContext = BuildContext("-1")
             };

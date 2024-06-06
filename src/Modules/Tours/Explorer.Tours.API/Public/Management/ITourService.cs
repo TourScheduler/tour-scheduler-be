@@ -20,5 +20,7 @@ namespace Explorer.Tours.API.Public.Management
         Result<List<TourDto>> GetAuthorToursByStatus(int authorId, int status);
         Result<List<TourDto>> GetPublishedTours();
         Result<List<TourDto>> GetByAwardStatus(bool status, List<AuthorDto> authors);
+        Result<List<TourDto>> GetByTouristInterests(TouristDto tourist);
+        Result<List<TourDto>> GetByTouristInterestsAndDifficult(int difficult, TouristDto tourist);
     }
 }

@@ -146,5 +146,25 @@ namespace Explorer.Tours.Core.UseCases.Management
 
             return tours;
         }
+
+        public Result<List<TourDto>> GetByTouristInterests(TouristDto tourist)
+        {
+            List<TourDto> tours = _tourRepository.GetPublishedTours()
+                .Where(t => tourist.Interests.Any(i => i.Interest.ToString() == t.Category.ToString()))
+                .Select(t => _mapper.Map<TourDto>(t))
+                .ToList();
+
+            return tours;
+        }
+
+        public Result<List<TourDto>> GetByTouristInterestsAndDifficult(int difficult, TouristDto tourist)
+        {
+            List<TourDto> tours = _tourRepository.GetPublishedTours()
+                .Where(t => tourist.Interests.Any(i => i.Interest.ToString() == t.Category.ToString()) && (int)t.Difficult == difficult)
+                .Select(t => _mapper.Map<TourDto>(t))
+                .ToList();
+
+            return tours;
+        }
     }
 }

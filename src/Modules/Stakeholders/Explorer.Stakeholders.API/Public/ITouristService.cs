@@ -11,5 +11,6 @@ namespace Explorer.Stakeholders.API.Public
     public interface ITouristService
     {
         Result<TouristDto> GetById(int id);
+        Result<TouristDto> UpdateInterests(int id, List<InterestDto> interests);
     }
 }

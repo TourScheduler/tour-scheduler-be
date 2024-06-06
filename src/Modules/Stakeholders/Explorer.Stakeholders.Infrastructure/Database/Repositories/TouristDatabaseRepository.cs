@@ -30,5 +30,19 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         {
             return _dbContext.Tourists.FirstOrDefault(t => t.UserId == id);
         }
+
+        public Tourist Update(Tourist tourist)
+        {
+            try
+            {
+                _dbContext.Tourists.Update(tourist);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return tourist;
+        }
     }
 }
