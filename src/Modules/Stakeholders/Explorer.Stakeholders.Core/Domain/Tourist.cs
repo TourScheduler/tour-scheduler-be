@@ -13,7 +13,7 @@ namespace Explorer.Stakeholders.Core.Domain
     public class Tourist : Entity
     {
         public long UserId { get; init; }
-        public List<Interest> Interests { get; init; }
+        public List<Interest> Interests { get; private set; }
 
         public Tourist(long userId, List<Interest> interests) 
         {
@@ -25,6 +25,11 @@ namespace Explorer.Stakeholders.Core.Domain
         {
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
             if (Interests.Count == 0) throw new ArgumentException("Interests empty");
+        }
+
+        public void UpdateInterests(List<Interest> interests)
+        {
+            Interests = interests;
         }
     }
 }

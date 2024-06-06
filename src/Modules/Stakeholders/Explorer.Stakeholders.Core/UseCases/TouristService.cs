@@ -47,5 +47,18 @@ namespace Explorer.Stakeholders.Core.UseCases
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
+
+        public Result<API.Dtos.TouristDto> UpdateInterests(int id, List<API.Dtos.InterestDto> interests)
+        {
+            var user = _userRepository.GetById(id);
+            var person = _personRepository.Get(user.Id);
+            var tourist = _touristRepository.GetById((int)user.Id);
+
+            tourist.UpdateInterests(interests.Select(interest => new Interest((Domain.InterestType)interest.Type)).ToList());
+
+            tourist = _touristRepository.Update(tourist);
+
+            return new API.Dtos.TouristDto(user.Id, user.Username, user.Password, API.Dtos.UserRole.Tourist, user.IsActive, person.Name, person.Surname, person.Email, tourist.Interests.Select(i => new API.Dtos.InterestDto((API.Dtos.InterestType)i.Type)).ToList());
+        }
     }
 }

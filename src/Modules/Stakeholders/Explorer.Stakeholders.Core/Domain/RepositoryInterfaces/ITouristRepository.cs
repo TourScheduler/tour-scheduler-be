@@ -10,5 +10,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
     {
         Tourist Create(Tourist tourist);
         Tourist GetById(int id);
+        Tourist Update(Tourist tourist);
     }
 }
