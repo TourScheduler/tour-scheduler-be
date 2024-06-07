@@ -34,6 +34,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.TourProblems.FirstOrDefault(t => t.Id == id);
         }
 
+        public List<TourProblem> GetByStatus(int status)
+        {
+            return _dbContext.TourProblems.Where(tp => (int)tp.Status == status).ToList();
+        }
+
         public List<TourProblem> GetByTouristId(long touristId)
         {
             return _dbContext.TourProblems.Where(tp => tp.TouristId == touristId).ToList();

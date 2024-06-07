@@ -13,5 +13,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         List<TourProblem> GetAll();
         TourProblem Update(TourProblem tourProblem);
         TourProblem GetById(long id);
+        List<TourProblem> GetByStatus(int status);
     }
 }

@@ -49,6 +49,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return tourProblems;
         }
 
+        public Result<List<TourProblemDto>> GetByStatus(int status)
+        {
+            List<TourProblemDto> tourProblems = _tourProblemRepository
+                .GetByStatus(status)
+                .Select(tp => new TourProblemDto(tp.Id, tp.TouristId, tp.TourId, tp.Name, tp.Description, (API.Dtos.ProblemStatus)tp.Status))
+                .ToList();
+
+            return tourProblems;
+        }
 
         public Result<List<TourProblemDto>> GetByTouristId(long touristId)
         {
