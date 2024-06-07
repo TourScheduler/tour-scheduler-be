@@ -23,5 +23,12 @@ namespace Explorer.API.Controllers.Author.Management
             var result = _tourProblemService.GetByAuthorId(authorId);
             return CreateResponse(result);
         }
+
+        [HttpPut("{id:int}/status")]
+        public ActionResult<TourProblemDto> UpdateStatus(int id, [FromBody] ProblemStatus status)
+        {
+            var result = _tourProblemService.UpdateStatus(id, status);
+            return CreateResponse(result);
+        }
     }
 }

@@ -59,5 +59,23 @@ namespace Explorer.Tours.Core.UseCases.Execution
 
             return tourProblems;
         }
+
+        public Result<TourProblemDto> UpdateStatus(int id, API.Dtos.ProblemStatus status)
+        {
+            try
+            {
+                var tourProblem = _tourProblemRepository.GetById(id);
+
+                tourProblem.ChangeStatus((Domain.ProblemStatus)status);
+                tourProblem = _tourProblemRepository.Update(tourProblem);
+
+                return new TourProblemDto(tourProblem.Id, tourProblem.TouristId, tourProblem.TourId, tourProblem.Name, tourProblem.Description, (API.Dtos.ProblemStatus)tourProblem.Status);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+                // There is a subtle issue here. Can you find it?
+            }
+        }
     }
 }

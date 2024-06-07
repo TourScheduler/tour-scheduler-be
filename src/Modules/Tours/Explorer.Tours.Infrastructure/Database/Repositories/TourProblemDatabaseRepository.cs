@@ -1,5 +1,6 @@
 ﻿using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,28 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.TourProblems.ToList();
         }
 
+        public TourProblem GetById(long id)
+        {
+            return _dbContext.TourProblems.FirstOrDefault(t => t.Id == id);
+        }
+
         public List<TourProblem> GetByTouristId(long touristId)
         {
             return _dbContext.TourProblems.Where(tp => tp.TouristId == touristId).ToList();
+        }
+
+        public TourProblem Update(TourProblem tourProblem)
+        {
+            try
+            {
+                _dbContext.TourProblems.Update(tourProblem);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return tourProblem;
         }
     }
 }

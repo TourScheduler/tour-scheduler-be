@@ -13,5 +13,6 @@ namespace Explorer.Tours.API.Public.Execution
         Result<TourProblemDto> Create(CreateTourProblemDto createTourProblem);
         Result<List<TourProblemDto>> GetByTouristId(long touristId);
         Result<List<TourProblemDto>> GetByAuthorId(long authorId);
+        Result<TourProblemDto> UpdateStatus(int id, ProblemStatus status);
     }
 }
