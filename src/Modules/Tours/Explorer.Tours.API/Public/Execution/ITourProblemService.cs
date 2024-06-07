@@ -11,6 +11,7 @@ namespace Explorer.Tours.API.Public.Execution
     public interface ITourProblemService
     {
         Result<TourProblemDto> Create(CreateTourProblemDto createTourProblem);
-        Result<List<TourProblemDto>> GetByTouristId(long touristId); 
+        Result<List<TourProblemDto>> GetByTouristId(long touristId);
+        Result<List<TourProblemDto>> GetByAuthorId(long authorId);
     }
 }

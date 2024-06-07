@@ -15,10 +15,12 @@ namespace Explorer.Tours.Core.UseCases.Execution
     public class TourProblemService : ITourProblemService
     {
         private readonly ITourProblemRepository _tourProblemRepository;
+        private readonly ITourRepository _tourRepository;
         
-        public TourProblemService(ITourProblemRepository tourProblemRepository)
+        public TourProblemService(ITourProblemRepository tourProblemRepository, ITourRepository tourRepository)
         {
             _tourProblemRepository = tourProblemRepository;
+            _tourRepository = tourRepository;
         }
 
         public Result<TourProblemDto> Create(CreateTourProblemDto createTourProblem)
@@ -35,6 +37,18 @@ namespace Explorer.Tours.Core.UseCases.Execution
                 // There is a subtle issue here. Can you find it?
             }
         }
+
+        public Result<List<TourProblemDto>> GetByAuthorId(long authorId)
+        {
+            List<TourProblemDto> tourProblems = _tourProblemRepository
+                .GetAll()
+                .Where(tp => _tourRepository.GetById((int)tp.TourId).AuthorId == authorId)
+                .Select(tp => new TourProblemDto(tp.Id, tp.TouristId, tp.TourId, tp.Name, tp.Description, (API.Dtos.ProblemStatus)tp.Status))
+                .ToList();
+
+            return tourProblems;
+        }
+
 
         public Result<List<TourProblemDto>> GetByTouristId(long touristId)
         {
