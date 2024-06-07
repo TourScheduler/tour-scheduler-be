@@ -23,5 +23,12 @@ namespace Explorer.API.Controllers.Tourist.Execution
             var result = _tourProblemService.Create(createTourProblem);
             return CreateResponse(result);
         }
+
+        [HttpGet("tourist/{touristId:int}")]
+        public ActionResult<TourProblemDto> GetByTouristId(int touristId)
+        {
+            var result = _tourProblemService.GetByTouristId(touristId);
+            return CreateResponse(result);
+        }
     }
 }

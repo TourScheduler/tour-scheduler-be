@@ -9,5 +9,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     public interface ITourProblemRepository
     {
         TourProblem Create(TourProblem tourProblem);
+        List<TourProblem> GetByTouristId(long touristId);
     }
 }

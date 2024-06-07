@@ -22,5 +22,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return tourProblem;
         }
+
+        public List<TourProblem> GetByTouristId(long touristId)
+        {
+            return _dbContext.TourProblems.Where(tp => tp.TouristId == touristId).ToList();
+        }
     }
 }

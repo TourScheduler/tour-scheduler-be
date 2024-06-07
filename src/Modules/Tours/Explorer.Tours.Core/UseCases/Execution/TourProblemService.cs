@@ -35,5 +35,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
                 // There is a subtle issue here. Can you find it?
             }
         }
+
+        public Result<List<TourProblemDto>> GetByTouristId(long touristId)
+        {
+            List<TourProblemDto> tourProblems = _tourProblemRepository
+                .GetByTouristId(touristId)
+                .Select(tp => new TourProblemDto(tp.Id, tp.TouristId, tp.TourId, tp.Name, tp.Description, (API.Dtos.ProblemStatus)tp.Status))
+                .ToList();
+
+            return tourProblems;
+        }
     }
 }
