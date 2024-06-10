@@ -35,6 +35,7 @@ public static class StakeholdersStartup
         services.AddSingleton<IAuthorService, AuthorService>();
         services.AddHostedService<AuthorSchedulerService>();
         services.AddSingleton<IInternalAuthorService, AuthorService>();
+        services.AddScoped<IUserService, UserService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -43,6 +44,7 @@ public static class StakeholdersStartup
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped<ITouristRepository, TouristDatabaseRepository>();
         services.AddScoped<IAuthorRepository, AuthorDatabaseRepository>();
+        services.AddScoped<IUserRepository, UserDatabaseRepository>();
 
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),
