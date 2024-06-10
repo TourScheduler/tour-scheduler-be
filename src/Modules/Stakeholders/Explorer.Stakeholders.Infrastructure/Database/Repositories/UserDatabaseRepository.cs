@@ -65,4 +65,9 @@ public class UserDatabaseRepository : IUserRepository
     {
         return _dbContext.Users.Where(u => (int)u.Role == 1).ToList();
     }
+
+    public Person GetPersonById(long userId)
+    {
+        return _dbContext.People.FirstOrDefault(p => p.UserId == userId);
+    }
 }

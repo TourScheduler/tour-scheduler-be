@@ -11,8 +11,9 @@ namespace Explorer.Stakeholders.API.Public
     public interface IUserService
     {
         Result<UserDto> Block(int id);
-        Result<List<UserDto>> FindMaliciousUsers();
-        void FindMaliciousAuthors(List<UserDto> users);
-        void FindMaliciousTourists(List<UserDto> users);
+        Result<List<UserInfoDto>> FindMaliciousUsers();
+        void FindMaliciousAuthors(List<UserInfoDto> users);
+        void FindMaliciousTourists(List<UserInfoDto> users);
+        void SendConfirmationEmail(string receiverEmail);
     }
 }

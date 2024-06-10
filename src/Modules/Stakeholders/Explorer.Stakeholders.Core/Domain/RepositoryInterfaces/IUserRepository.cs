@@ -10,4 +10,5 @@ public interface IUserRepository
     User Update(User user);
     List<User> GetTourists();
     List<User> GetAuthors();
+    Person GetPersonById(long userId);
 }

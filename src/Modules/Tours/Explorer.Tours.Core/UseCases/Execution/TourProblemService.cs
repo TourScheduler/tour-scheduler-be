@@ -29,7 +29,7 @@ namespace Explorer.Tours.Core.UseCases.Execution
         {
             foreach (var tp in  _tourProblemRepository.GetAll())
             {
-                if (_tourRepository.GetById((int)tp.TourId).AuthorId == authorId && CountStatusChange(tp) >= 10)
+                if (_tourRepository.GetById((int)tp.TourId).AuthorId == authorId && CountStatusChange(tp) >= 1)
                 {
                     return true;
                 }
@@ -55,7 +55,7 @@ namespace Explorer.Tours.Core.UseCases.Execution
 
         public bool CheckMaliciousTourist(int touristId)
         {
-            if (_tourProblemRepository.GetByTouristIdAndStatus(touristId, 3).Count >= 10)
+            if (_tourProblemRepository.GetByTouristIdAndStatus(touristId, 3).Count >= 1)
             {
                 return true;
             }

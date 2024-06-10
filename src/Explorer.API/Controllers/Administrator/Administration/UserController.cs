@@ -26,7 +26,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         }
 
         [HttpGet("malicious")]
-        public ActionResult<UserDto> GetMaliciousUsers()
+        public ActionResult<UserInfoDto> GetMaliciousUsers()
         {
             var result = _userService.FindMaliciousUsers();
             return CreateResponse(result);
