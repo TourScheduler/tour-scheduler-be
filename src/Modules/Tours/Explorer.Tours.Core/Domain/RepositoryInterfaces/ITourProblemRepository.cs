@@ -14,5 +14,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         TourProblem Update(TourProblem tourProblem);
         TourProblem GetById(long id);
         List<TourProblem> GetByStatus(int status);
+        List<TourProblem> GetByTouristIdAndStatus(long touristId, int status);
     }
 }

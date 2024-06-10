@@ -44,6 +44,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.TourProblems.Where(tp => tp.TouristId == touristId).ToList();
         }
 
+        public List<TourProblem> GetByTouristIdAndStatus(long touristId, int status)
+        {
+            return _dbContext.TourProblems.Where(tp => tp.TouristId == touristId && (int)tp.Status == status).ToList();
+        }
+
         public TourProblem Update(TourProblem tourProblem)
         {
             try

@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Tours.API.Internal;
+using Microsoft.Extensions.Logging;
 
 namespace Explorer.Tours.Core.UseCases.Execution
 {
-    public class TourProblemService : ITourProblemService
+    public class TourProblemService : ITourProblemService, IInternalTourProblemService
     {
         private readonly ITourProblemRepository _tourProblemRepository;
         private readonly ITourRepository _tourRepository;
@@ -21,6 +23,44 @@ namespace Explorer.Tours.Core.UseCases.Execution
         {
             _tourProblemRepository = tourProblemRepository;
             _tourRepository = tourRepository;
+        }
+
+        public bool CheckMaliciousAuthor(int authorId)
+        {
+            foreach (var tp in  _tourProblemRepository.GetAll())
+            {
+                if (_tourRepository.GetById((int)tp.TourId).AuthorId == authorId && CountStatusChange(tp) >= 10)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private int CountStatusChange(TourProblem tp)
+        {
+            int counter = 0;
+            for (int i = 1; i < tp.Events.Count; i++)
+            {
+                if (tp.Events[i - 1].Status == Domain.ProblemStatus.OnRevision &&
+                    tp.Events[i].Status == Domain.ProblemStatus.Pending)
+                {
+                    counter++;
+                }
+            }
+
+            return counter;
+        }
+
+        public bool CheckMaliciousTourist(int touristId)
+        {
+            if (_tourProblemRepository.GetByTouristIdAndStatus(touristId, 3).Count >= 10)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public Result<TourProblemDto> Create(CreateTourProblemDto createTourProblem)

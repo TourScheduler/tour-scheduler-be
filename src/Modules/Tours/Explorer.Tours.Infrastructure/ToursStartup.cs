@@ -38,6 +38,7 @@ public static class ToursStartup
         services.AddHostedService<ReportSchedulerService>();
         services.AddScoped<IInternalReportService, ReportService>();
         services.AddScoped<ITourProblemService, TourProblemService>();
+        services.AddScoped<IInternalTourProblemService, TourProblemService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
