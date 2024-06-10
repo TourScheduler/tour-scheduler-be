@@ -31,5 +31,12 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _userService.FindMaliciousUsers();
             return CreateResponse(result);
         }
+
+        [HttpPut("{id:int}/unblock")]
+        public ActionResult<UserDto> UnblockUser(int id)
+        {
+            var result = _userService.Unblock(id);
+            return CreateResponse(result);
+        }
     }
 }

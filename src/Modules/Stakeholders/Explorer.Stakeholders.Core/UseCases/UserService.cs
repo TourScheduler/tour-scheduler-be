@@ -107,5 +107,23 @@ namespace Explorer.Stakeholders.Core.UseCases
                 }
             }
         }
+
+        public Result<UserDto> Unblock(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetById(id);
+
+                user.Unblock();
+                user = _userRepository.Update(user);
+
+                return new UserDto(user.Id, user.Username, user.Password, (API.Dtos.UserRole)user.Role, user.IsActive);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+                // There is a subtle issue here. Can you find it?
+            }
+        }
     }
 }

@@ -33,6 +33,11 @@ public class User : Entity
     {
         IsActive = false;
     }
+
+    public void Unblock()
+    {
+        IsActive = true;
+    }
 }
 
 public enum UserRole

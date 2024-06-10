@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Public
         void FindMaliciousAuthors(List<UserInfoDto> users);
         void FindMaliciousTourists(List<UserInfoDto> users);
         void SendConfirmationEmail(string receiverEmail);
+        Result<UserDto> Unblock(int id);
     }
 }
