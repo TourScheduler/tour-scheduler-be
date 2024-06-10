@@ -12,5 +12,7 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<UserDto> Block(int id);
         Result<List<UserDto>> FindMaliciousUsers();
+        void FindMaliciousAuthors(List<UserDto> users);
+        void FindMaliciousTourists(List<UserDto> users);
     }
 }

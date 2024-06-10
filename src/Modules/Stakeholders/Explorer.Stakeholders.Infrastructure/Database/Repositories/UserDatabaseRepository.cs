@@ -60,4 +60,9 @@ public class UserDatabaseRepository : IUserRepository
     {
         return _dbContext.Users.Where(u => (int)u.Role == 2).ToList();
     }
+
+    public List<User> GetAuthors()
+    {
+        return _dbContext.Users.Where(u => (int)u.Role == 1).ToList();
+    }
 }

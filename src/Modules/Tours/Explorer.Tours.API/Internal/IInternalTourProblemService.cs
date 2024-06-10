@@ -9,5 +9,6 @@ namespace Explorer.Tours.API.Internal
     public interface IInternalTourProblemService
     {
         public bool CheckMaliciousTourist(int touristId);
+        public bool CheckMaliciousAuthor(int authorId);
     }
 }

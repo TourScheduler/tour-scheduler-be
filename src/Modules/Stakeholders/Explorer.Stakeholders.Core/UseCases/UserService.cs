@@ -45,6 +45,26 @@ namespace Explorer.Stakeholders.Core.UseCases
         public Result<List<UserDto>> FindMaliciousUsers()
         {
             List<UserDto> users = new List<UserDto>();
+
+            FindMaliciousTourists(users);
+            FindMaliciousAuthors(users);
+
+            return users;
+        }
+
+        public void FindMaliciousAuthors(List<UserDto> users)
+        {
+            foreach (var user in _userRepository.GetAuthors())
+            {
+                if (_tourProblemService.CheckMaliciousAuthor((int)user.Id))
+                {
+                    users.Add(new UserDto(user.Id, user.Username, user.Password, (API.Dtos.UserRole)user.Role, user.IsActive));
+                }
+            }
+        }
+
+        public void FindMaliciousTourists(List<UserDto> users)
+        {
             foreach (var user in _userRepository.GetTourists())
             {
                 if (_tourProblemService.CheckMaliciousTourist((int)user.Id))
@@ -52,8 +72,6 @@ namespace Explorer.Stakeholders.Core.UseCases
                     users.Add(new UserDto(user.Id, user.Username, user.Password, (API.Dtos.UserRole)user.Role, user.IsActive));
                 }
             }
-
-            return users;
         }
     }
 }

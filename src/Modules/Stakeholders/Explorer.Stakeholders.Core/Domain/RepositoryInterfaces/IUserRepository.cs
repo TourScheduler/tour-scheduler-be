@@ -9,4 +9,5 @@ public interface IUserRepository
     User GetById(int id);
     User Update(User user);
     List<User> GetTourists();
+    List<User> GetAuthors();
 }
