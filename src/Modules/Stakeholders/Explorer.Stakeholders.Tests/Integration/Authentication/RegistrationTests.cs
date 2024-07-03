@@ -28,7 +28,8 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
             Email = "turistaA@gmail.com",
             Password = "turistaA",
             Name = "Žika",
-            Surname = "Žikić"
+            Surname = "Žikić",
+            Interests = new List<TouristInterestDto>() { new TouristInterestDto() { Interest = (API.Dtos.InterestType)1 } }
         };
 
         // Act
@@ -46,7 +47,7 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
         dbContext.ChangeTracker.Clear();
         var storedAccount = dbContext.Users.FirstOrDefault(u => u.Username == account.Email);
         storedAccount.ShouldNotBeNull();
-        storedAccount.Role.ShouldBe(UserRole.Tourist);
+        storedAccount.Role.ShouldBe(Core.Domain.UserRole.Tourist);
         var storedPerson = dbContext.People.FirstOrDefault(i => i.Email == account.Email);
         storedPerson.ShouldNotBeNull();
         storedPerson.UserId.ShouldBe(storedAccount.Id);

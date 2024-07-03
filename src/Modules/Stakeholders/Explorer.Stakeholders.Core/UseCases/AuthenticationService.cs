@@ -1,8 +1,10 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using AutoMapper;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain;
 using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases;
@@ -12,12 +14,16 @@ public class AuthenticationService : IAuthenticationService
     private readonly ITokenGenerator _tokenGenerator;
     private readonly IUserRepository _userRepository;
     private readonly ICrudRepository<Person> _personRepository;
+    private readonly ITouristRepository _touristRepository;
+    private readonly IMapper _mapper;
 
-    public AuthenticationService(IUserRepository userRepository, ICrudRepository<Person> personRepository, ITokenGenerator tokenGenerator)
+    public AuthenticationService(IUserRepository userRepository, ICrudRepository<Person> personRepository, ITokenGenerator tokenGenerator, ITouristRepository touristRepository, IMapper mapper)
     {
         _tokenGenerator = tokenGenerator;
         _userRepository = userRepository;
         _personRepository = personRepository;
+        _touristRepository = touristRepository;
+        _mapper = mapper;
     }
 
     public Result<AuthenticationTokensDto> Login(CredentialsDto credentials)
@@ -43,8 +49,9 @@ public class AuthenticationService : IAuthenticationService
 
         try
         {
-            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true));
+            var user = _userRepository.Create(new User(account.Username, account.Password, Domain.UserRole.Tourist, true));
             var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email));
+            var tourist = _touristRepository.Create(new Tourist(user.Id, _mapper.Map<List<Interest>>(account.Interests)));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);
         }
